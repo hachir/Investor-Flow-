@@ -7,6 +7,11 @@
     "email": "ha1991ha@yahoo.com",
     "url": "https://github.com/hachir"
   },
+  "homepage": "https://brrrr-investment-calculator.hayderachir721.chatgpt.site",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hachir/Investor-Flow-.git"
+  },
   "private": true,
   "engines": {
     "node": ">=22.13.0"
