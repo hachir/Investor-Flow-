@@ -77,7 +77,7 @@ export default function Home() {
 
   if(showWorkbook) return <WorkbookView onNewEstimate={()=>setShowWorkbook(false)}/>;
   return <main><div className="workspace"><Button variant="outline" onClick={()=>setShowWorkbook(true)}>Back to complete workbook</Button><p className="source-note">New estimate uses today, +90 days to rent and +105 days to refinance. Imported workbook rows retain their original dates.</p></div>
-    <header className="topbar"><div className="brand-mark"><TrendingUp aria-hidden="true" /></div><div><p className="eyebrow">BRRRR DEAL CALCULATOR</p><h1>Mohammed Alhareb</h1></div><div className="as-of"><CalendarDays aria-hidden="true" /> As of {dateText(new Date())}</div></header>
+    <header className="topbar"><div className="brand-mark"><TrendingUp aria-hidden="true" /></div><div><p className="eyebrow">INVESTOR FLOW</p><h1>Mohammed Alhareb</h1></div><div className="as-of"><CalendarDays aria-hidden="true" /> As of {dateText(new Date())}</div></header>
     <section className="workspace">
       <div className="intro-row"><div><p className="section-kicker">LIVE DEAL SUMMARY</p><h2>{deal.address || "New property"}</h2></div><div className="legend" aria-label="Color key"><span><i className="green-dot" /> Green: your inputs</span><span><i className="yellow-dot" /> Yellow: key results</span><span><i className="blue-dot" /> Blue: deal details</span></div></div>
       <section className="metric-grid" aria-label="Key results">
