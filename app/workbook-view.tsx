@@ -41,11 +41,13 @@ export default function WorkbookView({onNewEstimate}:{onNewEstimate:()=>void}) {
 function SheetView({sheet}:{sheet:Sheet}) {
   const [selected,setSelected]=useState(0);
   const [search,setSearch]=useState('');
+  const [showResults,setShowResults]=useState(false);
   const [edits,setEdits]=useState<Record<number,Record<string,string|number>>>({});
   const rows=sheet.rows.map(r=>calculateRow(r,edits[r.row]));
   const row=sheet.rows[selected],values=rows[selected];
   const sf=sheet.name==='Buying with SF';
   const keys=Object.keys(sheet.headers);
+  const resultPanelId=`results-${sheet.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')}`;
   const change=(col:string,v:string)=>setEdits(prev=>({...prev,[row.row]:{...prev[row.row],[col]:v===''?'':kind(sheet,col)==='text'?v:kind(sheet,col)==='date'?serial(v):Number(v)/(kind(sheet,col)==='percent'?100:1)}}));
   const summary=sheet.name==='50% partnership'?['X','AC','AG','AH']:sheet.name==='Without Mo'?['AA','AF','AJ','AK']:['U','T','Y','Z'];
   const original=calculateRow(row,{});
@@ -74,7 +76,10 @@ function SheetView({sheet}:{sheet:Sheet}) {
     {!sf&&<GrowthChart arv={Number(values.C)} loan={Number(values.S)} rate={Number(values.T)} appreciation={Number(values[appreciationCol])} invested={moneyLeft}/>}
     <InvestorMotion />
     </section>
-    <section className="panel workbook-results"><div className="panel-heading"><h3>Results</h3><span className="result-count">{keys.length} sections</span></div><div className="result-actions"><Button variant="outline" onClick={exportCsv}>Export selected deal</Button><Button variant="outline" onClick={()=>window.print()}>Print</Button></div><Input className="result-search" aria-label="Find a result" placeholder="Find a result…" value={search} onChange={e=>setSearch(e.target.value)}/><Table><TableHeader><TableRow><TableHead>Section</TableHead><TableHead>Result</TableHead></TableRow></TableHeader><TableBody>{keys.filter(c=>label(sheet,c).toLowerCase().includes(search.toLowerCase())).map(col=><TableRow key={col}><TableCell className="note-cell">{label(sheet,col)}</TableCell><TableCell className={row.cells[col].f?'sheet-result':'sheet-input'}>{display(sheet,col,values[col])}</TableCell></TableRow>)}</TableBody></Table>{!keys.some(c=>label(sheet,c).toLowerCase().includes(search.toLowerCase()))&&<p className="source-note">No matching sections. Try a different name.</p>}</section></div>
+    <section className={`panel workbook-results ${showResults?'is-open':'is-collapsed'}`}>
+      <div className="panel-heading results-heading"><div><h3>Results</h3><span className="result-count">{keys.length} sections</span></div><Button className="results-toggle" type="button" aria-expanded={showResults} aria-controls={resultPanelId} onClick={()=>setShowResults(v=>!v)}>{showResults?'Hide results':`Show all ${keys.length} results`}</Button></div>
+      {showResults&&<div id={resultPanelId} className="results-content"><div className="result-actions"><Button variant="outline" onClick={exportCsv}>Export selected deal</Button><Button variant="outline" onClick={()=>window.print()}>Print</Button></div><Input className="result-search" aria-label="Find a result" placeholder="Find a result…" value={search} onChange={e=>setSearch(e.target.value)}/><Table><TableHeader><TableRow><TableHead>Section</TableHead><TableHead>Result</TableHead></TableRow></TableHeader><TableBody>{keys.filter(c=>label(sheet,c).toLowerCase().includes(search.toLowerCase())).map(col=><TableRow key={col}><TableCell className="note-cell">{label(sheet,col)}</TableCell><TableCell className={row.cells[col].f?'sheet-result':'sheet-input'}>{display(sheet,col,values[col])}</TableCell></TableRow>)}</TableBody></Table>{!keys.some(c=>label(sheet,c).toLowerCase().includes(search.toLowerCase()))&&<p className="source-note">No matching sections. Try a different name.</p>}</div>}
+    </section></div>
     <section className="panel full-sheet"><h3>Complete property schedule — all columns</h3><Table><TableHeader><TableRow>{keys.map(col=><TableHead key={col}>{label(sheet,col)}</TableHead>)}</TableRow></TableHeader><TableBody>{sheet.rows.map((r,i)=><TableRow key={r.row}>{keys.map(col=><TableCell key={col} className={r.cells[col].f?'sheet-result':'sheet-input'}>{display(sheet,col,rows[i][col])}</TableCell>)}</TableRow>)}</TableBody></Table></section>
   </>;
 }
