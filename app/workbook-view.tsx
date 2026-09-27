@@ -25,10 +25,17 @@ function kind(sheet:Sheet,col:string) {
 }
 function label(sheet:Sheet,col:string) { return sheet.headers[col]===0.5?'50% of the annual return':String(sheet.headers[col]).trim(); }
 function display(sheet:Sheet,col:string,v:string|number) {
-  if(v==='') return 'Not provided';
-  if(typeof v==='string') return v;
   const k=kind(sheet,col);
-  return k==='date'?dateString(v):k==='percent'?(v*100).toFixed(2)+'%':currency.format(v);
+  if(v===null||v===undefined||(typeof v==='string'&&!v.trim())) return 'Not provided';
+  if(k==='date') {
+    if(typeof v==='number') return dateString(v);
+    const value=v.trim();
+    if(/^\d+(?:\.\d+)?$/.test(value)) return dateString(Number(value));
+    const parsed=Date.parse(value);
+    return Number.isFinite(parsed)?new Date(parsed).toISOString().slice(0,10):'Not provided';
+  }
+  if(typeof v==='string') return v;
+  return k==='percent'?(v*100).toFixed(2)+'%':currency.format(v);
 }
 export default function WorkbookView({onNewEstimate}:{onNewEstimate:()=>void}) {
   const visibleSheets=sheets.filter(s=>!s.notes);
@@ -56,6 +63,9 @@ function SheetView({sheet}:{sheet:Sheet}) {
   const costParts=sheet.name==='Without Mo'?['L','E','M','Q','U','V','W']:['L','E','M','Q','U','Y','Z'];
   const appreciationCol=sheet.name==='Without Mo'?'AG':'AD';
   const changed=Object.keys(edits[row.row]||{}).some(c=>edits[row.row][c]!==row.cells[c].v);
+  const filteredKeys=keys.filter(c=>label(sheet,c).toLowerCase().includes(search.toLowerCase()));
+  const previewCount=6;
+  const displayedKeys=showResults?filteredKeys:filteredKeys.slice(0,previewCount);
   function exportCsv() {
     const escape=(v:string)=>'"'+(/^[=+@\-]/.test(v)?"'":'')+v.replaceAll('"','""')+'"';
     const lines=[['Section','Value'],...keys.map(c=>[label(sheet,c),display(sheet,c,values[c])])];
@@ -77,8 +87,14 @@ function SheetView({sheet}:{sheet:Sheet}) {
     <InvestorMotion />
     </section>
     <section className={`panel workbook-results ${showResults?'is-open':'is-collapsed'}`}>
-      <div className="panel-heading results-heading"><div><h3>Results</h3><span className="result-count">{keys.length} sections</span></div><Button className="results-toggle" type="button" aria-expanded={showResults} aria-controls={resultPanelId} onClick={()=>setShowResults(v=>!v)}>{showResults?'Hide details':'More details'}</Button></div>
-      <div id={resultPanelId} className="results-content" hidden={!showResults}><div className="result-actions"><Button variant="outline" onClick={exportCsv}>Export selected deal</Button><Button variant="outline" onClick={()=>window.print()}>Print</Button></div><Input className="result-search" aria-label="Find a result" placeholder="Find a result…" value={search} onChange={e=>setSearch(e.target.value)}/><Table><TableHeader><TableRow><TableHead>Section</TableHead><TableHead>Result</TableHead></TableRow></TableHeader><TableBody>{keys.filter(c=>label(sheet,c).toLowerCase().includes(search.toLowerCase())).map(col=><TableRow key={col}><TableCell className="note-cell">{label(sheet,col)}</TableCell><TableCell className={row.cells[col].f?'sheet-result':'sheet-input'}>{display(sheet,col,values[col])}</TableCell></TableRow>)}</TableBody></Table>{!keys.some(c=>label(sheet,c).toLowerCase().includes(search.toLowerCase()))&&<p className="source-note">No matching sections. Try a different name.</p>}<section className="panel full-sheet"><h3>Complete property schedule — all columns</h3><Table><TableHeader><TableRow>{keys.map(col=><TableHead key={col}>{label(sheet,col)}</TableHead>)}</TableRow></TableHeader><TableBody>{sheet.rows.map((r,i)=><TableRow key={r.row}>{keys.map(col=><TableCell key={col} className={r.cells[col].f?'sheet-result':'sheet-input'}>{display(sheet,col,rows[i][col])}</TableCell>)}</TableRow>)}</TableBody></Table></section></div>
+      <div className="panel-heading results-heading"><div><h3>Results</h3><span className="result-count">{keys.length} sections</span></div><Button className="results-toggle" type="button" aria-expanded={showResults} aria-controls={resultPanelId} onClick={()=>{setShowResults(v=>!v);if(showResults)setSearch('');}}>{showResults?'Hide details':'More details'}</Button></div>
+      <div id={resultPanelId} className="results-content">
+        {showResults&&<><div className="result-actions"><Button variant="outline" onClick={exportCsv}>Export selected deal</Button><Button variant="outline" onClick={()=>window.print()}>Print</Button></div><Input className="result-search" aria-label="Find a result" placeholder="Find a result…" value={search} onChange={e=>setSearch(e.target.value)}/></>}
+        <Table><TableHeader><TableRow><TableHead>Section</TableHead><TableHead>Result</TableHead></TableRow></TableHeader><TableBody>{displayedKeys.map(col=><TableRow key={col}><TableCell className="note-cell">{label(sheet,col)}</TableCell><TableCell className={row.cells[col].f?'sheet-result':'sheet-input'}>{display(sheet,col,values[col])}</TableCell></TableRow>)}</TableBody></Table>
+        {!showResults&&keys.length>previewCount&&<p className="results-preview-note">Showing the first {previewCount} results. Press More details to view all {keys.length} results and the complete property schedule.</p>}
+        {showResults&&filteredKeys.length===0&&<p className="source-note">No matching sections. Try a different name.</p>}
+        {showResults&&<section className="panel full-sheet"><h3>Complete property schedule — all columns</h3><Table><TableHeader><TableRow>{keys.map(col=><TableHead key={col}>{label(sheet,col)}</TableHead>)}</TableRow></TableHeader><TableBody>{sheet.rows.map((r,i)=><TableRow key={r.row}>{keys.map(col=><TableCell key={col} className={r.cells[col].f?'sheet-result':'sheet-input'}>{display(sheet,col,rows[i][col])}</TableCell>)}</TableRow>)}</TableBody></Table></section>}
+      </div>
     </section></div>
   </>;
 }
