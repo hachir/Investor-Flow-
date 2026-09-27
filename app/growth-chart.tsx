@@ -20,7 +20,7 @@ export default function GrowthChart({arv,loan,rate,appreciation,invested}:{arv:n
   const path=(key:'value'|'gain')=>points.map((p,i)=>`${i?'L':'M'}${x(p.year)},${y(p[key])}`).join(' ');
   const selected=points[year];
   return <section className="deal-insights growth-chart" aria-label="10-year property growth projection">
-    <p className="eyebrow">GROWTH OVER TIME</p><h3>Your next 10 years</h3>
+    <h3>Your next 10 years</h3>
     <div className="growth-legend"><span>— Property value</span><span>— Equity gain</span></div>
     <svg viewBox="0 0 550 375" role="img" aria-label="Projected property value and equity gain from refinance through year ten">
       <title>Property value and equity gain over ten years</title>

@@ -92,10 +92,10 @@ function SheetView({sheet}:{sheet:Sheet}) {
         <Table><TableHeader><TableRow><TableHead>Section</TableHead><TableHead>Result</TableHead></TableRow></TableHeader><TableBody>{displayedKeys.map(col=><TableRow key={col}><TableCell className="note-cell">{label(sheet,col)}</TableCell><TableCell className={row.cells[col].f?'sheet-result':'sheet-input'}>{display(sheet,col,values[col])}</TableCell></TableRow>)}</TableBody></Table>
         {!showResults&&keys.length>previewCount&&<p className="results-preview-note">Showing the first {previewCount} results. Press More details to view all {keys.length} results and the complete property schedule.</p>}
         {showResults&&filteredKeys.length===0&&<p className="source-note">No matching sections. Try a different name.</p>}
-        {showResults&&<section className="panel full-sheet"><h3>Complete property schedule — all columns</h3><Table><TableHeader><TableRow>{keys.map(col=><TableHead key={col}>{label(sheet,col)}</TableHead>)}</TableRow></TableHeader><TableBody>{sheet.rows.map((r,i)=><TableRow key={r.row}>{keys.map(col=><TableCell key={col} className={r.cells[col].f?'sheet-result':'sheet-input'}>{display(sheet,col,rows[i][col])}</TableCell>)}</TableRow>)}</TableBody></Table></section>}
       </div>
     </section>
     {!sf&&<section className="panel cost-breakdown"><div className="panel-heading"><div><p className="eyebrow">CAPITAL REQUIRED</p><h3>Total cost</h3></div><strong>{display(sheet,costCol,values[costCol])}</strong></div><div className="cost-bars">{costParts.map(c=><div className="cost-item" key={c}><div><span>{label(sheet,c)}</span><b>{display(sheet,c,values[c])}</b></div><div className="cost-track"><i style={{width:Math.min(100,Math.max(0,Number(values[c])/Math.max(1,Number(values[costCol]))*100))+'%'}}/></div></div>)}</div></section>}
     </div></div>
+    {showResults&&<section className="panel full-sheet"><h3>Complete property schedule — all columns</h3><Table><TableHeader><TableRow>{keys.map(col=><TableHead key={col}>{label(sheet,col)}</TableHead>)}</TableRow></TableHeader><TableBody>{sheet.rows.map((r,i)=><TableRow key={r.row}>{keys.map(col=><TableCell key={col} className={r.cells[col].f?'sheet-result':'sheet-input'}>{display(sheet,col,rows[i][col])}</TableCell>)}</TableRow>)}</TableBody></Table></section>}
   </>;
 }
