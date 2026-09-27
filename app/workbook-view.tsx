@@ -39,7 +39,7 @@ function display(sheet:Sheet,col:string,v:string|number) {
 }
 export default function WorkbookView({onNewEstimate}:{onNewEstimate:()=>void}) {
   const visibleSheets=sheets.filter(s=>!s.notes);
-  return <main><header className="topbar"><div><p className="eyebrow">INVESTOR FLOW</p><h1>Mohammed Alhareb</h1></div><Button className="as-of" onClick={onNewEstimate}>New estimate · today</Button><div id="account-nav" className="account-nav" /></header>
+  return <main><header className="topbar"><div><h1>Mohammed Alhareb</h1></div><Button className="as-of" onClick={onNewEstimate}>New estimate · today</Button><div id="account-nav" className="account-nav" /></header>
     <section className="workspace workbook"><p className="source-note">Imported workbook · original property dates and cell formulas. Green: editable inputs. Yellow: calculated results. Sign in below to save your property inputs.</p>
     <Tabs defaultValue={visibleSheets[0].name}><TabsList className="sheet-tabs">{visibleSheets.map(s=><TabsTrigger key={s.name} value={s.name}>{s.name === 'Without Mo' ? 'Mohamed is adviser' : s.name}</TabsTrigger>)}</TabsList>
     {visibleSheets.map(s=><TabsContent key={s.name} value={s.name}><SheetView sheet={s}/></TabsContent>)}
@@ -77,7 +77,6 @@ function SheetView({sheet}:{sheet:Sheet}) {
     {sf&&<p className="source-note">This source worksheet contains only the address, purchase price, ARV, rehab cost, market rent and two dates. All other cells have no values or formulas; they remain uncalculated here.</p>}
     <p className="scenario-status">{changed?'Edited scenario · compared with original workbook':'Original workbook scenario'}<span>Save to your account below</span></p>
     <section className="metric-grid">{summary.map((col,i)=><article className={'metric'+(i===0?' featured':'')} key={col}><span>{label(sheet,col)}</span><strong>{display(sheet,col,values[col])}</strong><small>{changed&&typeof values[col]==='number'&&typeof original[col]==='number'?`Change: ${kind(sheet,col)==='percent'?((Number(values[col])-Number(original[col]))*100).toFixed(2)+' percentage points':currency.format(Number(values[col])-Number(original[col]))}`:row.cells[col]?.f?'Original workbook calculation':'Not provided in source'}</small></article>)}</section>
-    {!sf&&<section className="panel cost-breakdown"><div className="panel-heading"><div><p className="eyebrow">CAPITAL REQUIRED</p><h3>Total cost</h3></div><strong>{display(sheet,costCol,values[costCol])}</strong></div><div className="cost-bars">{costParts.map(c=><div className="cost-item" key={c}><div><span>{label(sheet,c)}</span><b>{display(sheet,c,values[c])}</b></div><div className="cost-track"><i style={{width:Math.min(100,Math.max(0,Number(values[c])/Math.max(1,Number(values[costCol]))*100))+'%'}}/></div></div>)}</div></section>}
     <div className="content-grid"><section className="panel investor-inputs-panel"><div className="panel-heading"><h3>Investor inputs</h3><Button variant="outline" onClick={()=>setEdits(p=>({...p,[row.row]:{}}))}>Restore source row</Button></div><label className="source-property-picker" htmlFor={`property-${sheet.name}`}>Source property<select id={`property-${sheet.name}`} value={selected} onChange={e=>setSelected(Number(e.target.value))}>{sheet.rows.map((r,i)=><option key={r.row} value={i}>{String(rows[i].A)}</option>)}</select></label><p className="source-note">Original dates are preserved for exact comparison. Holding cost uses the actual days from purchase to refinance, not a fixed 105 days.</p><div className="fields">{keys.filter(col=>!row.cells[col].f && (!sf || row.cells[col].v!=='' )).map(col=>{
       const k=kind(sheet,col),v=values[col];
       const input=v===''?'':k==='date'?dateString(Number(v)):k==='percent'?Number((Number(v)*100).toFixed(10)):v;
@@ -86,7 +85,7 @@ function SheetView({sheet}:{sheet:Sheet}) {
     {!sf&&<GrowthChart arv={Number(values.C)} loan={Number(values.S)} rate={Number(values.T)} appreciation={Number(values[appreciationCol])} invested={moneyLeft}/>}
     <InvestorMotion />
     </section>
-    <section className={`panel workbook-results ${showResults?'is-open':'is-collapsed'}`}>
+    <div className="results-column"><section className={`panel workbook-results ${showResults?'is-open':'is-collapsed'}`}>
       <div className="panel-heading results-heading"><div><h3>Results</h3><span className="result-count">{keys.length} sections</span></div><Button className="results-toggle" type="button" aria-expanded={showResults} aria-controls={resultPanelId} onClick={()=>{setShowResults(v=>!v);if(showResults)setSearch('');}}>{showResults?'Hide details':'More details'}</Button></div>
       <div id={resultPanelId} className="results-content">
         {showResults&&<><div className="result-actions"><Button variant="outline" onClick={exportCsv}>Export selected deal</Button><Button variant="outline" onClick={()=>window.print()}>Print</Button></div><Input className="result-search" aria-label="Find a result" placeholder="Find a result…" value={search} onChange={e=>setSearch(e.target.value)}/></>}
@@ -95,6 +94,8 @@ function SheetView({sheet}:{sheet:Sheet}) {
         {showResults&&filteredKeys.length===0&&<p className="source-note">No matching sections. Try a different name.</p>}
         {showResults&&<section className="panel full-sheet"><h3>Complete property schedule — all columns</h3><Table><TableHeader><TableRow>{keys.map(col=><TableHead key={col}>{label(sheet,col)}</TableHead>)}</TableRow></TableHeader><TableBody>{sheet.rows.map((r,i)=><TableRow key={r.row}>{keys.map(col=><TableCell key={col} className={r.cells[col].f?'sheet-result':'sheet-input'}>{display(sheet,col,rows[i][col])}</TableCell>)}</TableRow>)}</TableBody></Table></section>}
       </div>
-    </section></div>
+    </section>
+    {!sf&&<section className="panel cost-breakdown"><div className="panel-heading"><div><p className="eyebrow">CAPITAL REQUIRED</p><h3>Total cost</h3></div><strong>{display(sheet,costCol,values[costCol])}</strong></div><div className="cost-bars">{costParts.map(c=><div className="cost-item" key={c}><div><span>{label(sheet,c)}</span><b>{display(sheet,c,values[c])}</b></div><div className="cost-track"><i style={{width:Math.min(100,Math.max(0,Number(values[c])/Math.max(1,Number(values[costCol]))*100))+'%'}}/></div></div>)}</div></section>}
+    </div></div>
   </>;
 }

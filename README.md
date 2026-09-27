@@ -1,10 +1,10 @@
-# Investor Flow
+# Real Estate Deal Calculator
 
 An interactive BRRRR real estate investment calculator by **HAYDER ACHIR**.
 
 ## Live website
 
-[Open Investor Flow](https://brrrr-investment-calculator.hayderachir721.chatgpt.site)
+[Open the calculator](https://brrrr-investment-calculator.hayderachir721.chatgpt.site)
 
 ## Features
 

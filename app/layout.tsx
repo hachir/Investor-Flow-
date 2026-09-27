@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Investor Flow | Real Estate Deal Calculator",
+  title: "Mohammed Alhareb | Real Estate Deal Calculator",
   description: "Calculate cash flow, refinance proceeds, equity, and 10-year returns for a BRRRR real estate investment.",
   icons: {
     icon: "/favicon.svg",
