@@ -1,35 +1,33 @@
 # Investor Flow
 
-An advanced BRRRR real-estate investment calculator built by **HAYDER ACHIR**.
+An interactive BRRRR real estate investment calculator by **HAYDER ACHIR**.
 
-## Live Website
+## Live website
 
-**[Open Investor Flow](https://brrrr-investment-calculator.hayderachir721.chatgpt.site)**
+[Open Investor Flow](https://brrrr-investment-calculator.hayderachir721.chatgpt.site)
 
-Investor Flow follows the calculation model used in the original investment worksheet and shows every major input and result, including:
+## Features
 
-- Purchase, renovation, rental, and refinance schedules
-- Buying and refinance loan amounts
-- Principal-and-interest payments and holding costs
-- Total project cost and money left in the deal
-- Monthly cash flow
-- Ten-year property value, loan balance, and equity gain
-- Annual return on investment
-- Interactive growth-over-time analysis
+- Calculates cash flow, total cost, refinance proceeds, equity gain, and annual return.
+- Follows the formulas and property schedules from the source investment workbook.
+- Supports multiple deal structures and full property schedules.
+- Uses email and password authentication through Supabase.
+- Saves each user's properties separately with row level security.
+- Includes responsive layouts, editable investor inputs, exports, printing, and growth analysis.
 
 ## Development
 
 Requirements:
 
 - Node.js 22.13 or newer
-- pnpm 11.25
+- pnpm
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Create a production build with:
+Create a production build:
 
 ```bash
 pnpm build
@@ -37,7 +35,8 @@ pnpm build
 
 ## Author
 
-**HAYDER ACHIR**  
+**HAYDER ACHIR**
+
 GitHub: [@hachir](https://github.com/hachir)
 
 ## License
