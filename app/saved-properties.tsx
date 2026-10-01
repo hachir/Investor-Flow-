@@ -15,24 +15,25 @@ export default function SavedProperties({kind,title,payload,onLoad}:{kind:string
  const [navHost,setNavHost]=useState<HTMLElement|null>(null);
  const [user,setUser]=useState<{id:string;email?:string}|null>(null),[items,setItems]=useState<Saved[]>([]),[active,setActive]=useState(''),[busy,setBusy]=useState(false),[ready,setReady]=useState(false),[message,setMessage]=useState('');
  useEffect(()=>{
-  setNavHost(document.getElementById('account-nav'));
   let mounted=true;
+  const frame=window.requestAnimationFrame(()=>{if(mounted)setNavHost(document.getElementById('account-nav'));});
   supabase.auth.getUser().then(({data,error})=>{if(mounted){setUser(error?null:data.user);setReady(true);}}).catch(()=>{if(mounted){setMessage('Could not check your account. Retry by refreshing.');setReady(true);}});
   const {data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
    if(event==='PASSWORD_RECOVERY'){setMode('new-password');setOpen(true);}
    if(mounted){setUser(session?.user??null);if(event==='SIGNED_OUT'){setItems([]);setActive('');}}
   });
-  return ()=>{mounted=false;subscription.unsubscribe();};
+  return ()=>{mounted=false;window.cancelAnimationFrame(frame);subscription.unsubscribe();};
  },[]);
+ const userId=user?.id;
  useEffect(()=>{let cancelled=false;
   async function load(){
-   if(!user){setItems([]);return;}
+   if(!userId){setItems([]);return;}
    const {data,error}=await supabase.from('properties').select('id,title,kind,payload,updated_at').order('updated_at',{ascending:false});
    if(cancelled)return;
    if(error)setMessage('Could not load saved properties. Please retry.');else setItems((data??[]) as Saved[]);
   }
   void load();return ()=>{cancelled=true;};
- },[user?.id]);
+ },[userId]);
  async function submitAuth(e:React.FormEvent){e.preventDefault();setBusy(true);setMessage('');
   try {
    if(mode==='signup'){

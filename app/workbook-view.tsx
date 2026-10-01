@@ -4,46 +4,33 @@ import SavedProperties from './saved-properties';
 import MoneyInput from './money-input';
 import GrowthChart from './growth-chart';
 import InvestorMotion from './investor-motion';
+import AdminNavLink from './admin-access';
+import SiteFooter from './site-footer';
 import data from '@/lib/workbook-data.json';
 import { calculateRow } from '@/lib/sheet-engine.mjs';
+import {
+  type WorkbookSheet as Sheet,
+  workbookDateSerial as serial,
+  workbookDateString as dateString,
+  workbookDisplay as display,
+  workbookLabel as label,
+  workbookValueKind as kind,
+  workbookSheetLabel,
+} from '@/lib/workbook-format';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Table, TableHeader, TableHead, TableBody, TableRow, TableCell } from '@/components/ui/table';
 
-type Row = {row:number;cells:Record<string,{v:string|number;f:string|null}>};
-type Sheet = {name:string;headers:Record<string,string|number>;rows:Row[];notes?: (string|number)[][]};
 const sheets=data as Sheet[];
 const currency=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:2,maximumFractionDigits:2});
-const dateString=(v:number)=>new Date((v-25569)*86400000).toISOString().slice(0,10);
-const serial=(v:string)=>Math.round(Date.parse(v+'T00:00:00Z')/86400000)+25569;
-function kind(sheet:Sheet,col:string) {
-  const h=String(sheet.headers[col]).toLowerCase();
-  if (h.includes('date') || h==='date buying') return 'date';
-  if (h.includes('rate') || h.includes('percentage') || h.includes('ltv') || h.includes('annual return') || sheet.headers[col]===0.5) return 'percent';
-  return col==='A'?'text':'money';
-}
-function label(sheet:Sheet,col:string) { return sheet.headers[col]===0.5?'50% of the annual return':String(sheet.headers[col]).trim(); }
-function display(sheet:Sheet,col:string,v:string|number) {
-  const k=kind(sheet,col);
-  if(v===null||v===undefined||(typeof v==='string'&&!v.trim())) return 'Not provided';
-  if(k==='date') {
-    if(typeof v==='number') return dateString(v);
-    const value=v.trim();
-    if(/^\d+(?:\.\d+)?$/.test(value)) return dateString(Number(value));
-    const parsed=Date.parse(value);
-    return Number.isFinite(parsed)?new Date(parsed).toISOString().slice(0,10):'Not provided';
-  }
-  if(typeof v==='string') return v;
-  return k==='percent'?(v*100).toFixed(2)+'%':currency.format(v);
-}
 export default function WorkbookView({onNewEstimate}:{onNewEstimate:()=>void}) {
   const visibleSheets=sheets.filter(s=>!s.notes);
-  return <main><header className="topbar"><div><h1>Mohammed Alhareb</h1></div><Button className="as-of" onClick={onNewEstimate}>New estimate · today</Button><div id="account-nav" className="account-nav" /></header>
+  return <main><header className="topbar"><div><h1>Mohammed Alhareb</h1></div><Button className="as-of" onClick={onNewEstimate}>New estimate · today</Button><nav className="site-nav" aria-label="Main navigation"><AdminNavLink /></nav><div id="account-nav" className="account-nav" /></header>
     <section className="workspace workbook"><p className="source-note">Imported workbook · original property dates and cell formulas. Green: editable inputs. Yellow: calculated results. Sign in below to save your property inputs.</p>
-    <Tabs defaultValue={visibleSheets[0].name}><TabsList className="sheet-tabs">{visibleSheets.map(s=><TabsTrigger key={s.name} value={s.name}>{s.name === 'Without Mo' ? 'Mohamed is adviser' : s.name}</TabsTrigger>)}</TabsList>
+    <Tabs defaultValue={visibleSheets[0].name}><TabsList className="sheet-tabs">{visibleSheets.map(s=><TabsTrigger key={s.name} value={s.name}>{workbookSheetLabel(s.name)}</TabsTrigger>)}</TabsList>
     {visibleSheets.map(s=><TabsContent key={s.name} value={s.name}><SheetView sheet={s}/></TabsContent>)}
-    </Tabs></section></main>;
+    </Tabs></section><SiteFooter /></main>;
 }
 function SheetView({sheet}:{sheet:Sheet}) {
   const [selected,setSelected]=useState(0);
@@ -90,12 +77,11 @@ function SheetView({sheet}:{sheet:Sheet}) {
       <div id={resultPanelId} className="results-content">
         {showResults&&<><div className="result-actions"><Button variant="outline" onClick={exportCsv}>Export selected deal</Button><Button variant="outline" onClick={()=>window.print()}>Print</Button></div><Input className="result-search" aria-label="Find a result" placeholder="Find a result…" value={search} onChange={e=>setSearch(e.target.value)}/></>}
         <Table><TableHeader><TableRow><TableHead>Section</TableHead><TableHead>Result</TableHead></TableRow></TableHeader><TableBody>{displayedKeys.map(col=><TableRow key={col}><TableCell className="note-cell">{label(sheet,col)}</TableCell><TableCell className={row.cells[col].f?'sheet-result':'sheet-input'}>{display(sheet,col,values[col])}</TableCell></TableRow>)}</TableBody></Table>
-        {!showResults&&keys.length>previewCount&&<p className="results-preview-note">Showing the first {previewCount} results. Press More details to view all {keys.length} results and the complete property schedule.</p>}
+        {!showResults&&keys.length>previewCount&&<p className="results-preview-note">Showing the first {previewCount} results. Press More details to view all {keys.length} results.</p>}
         {showResults&&filteredKeys.length===0&&<p className="source-note">No matching sections. Try a different name.</p>}
       </div>
     </section>
     {!sf&&<section className="panel cost-breakdown"><div className="panel-heading"><div><p className="eyebrow">CAPITAL REQUIRED</p><h3>Total cost</h3></div><strong>{display(sheet,costCol,values[costCol])}</strong></div><div className="cost-bars">{costParts.map(c=><div className="cost-item" key={c}><div><span>{label(sheet,c)}</span><b>{display(sheet,c,values[c])}</b></div><div className="cost-track"><i style={{width:Math.min(100,Math.max(0,Number(values[c])/Math.max(1,Number(values[costCol]))*100))+'%'}}/></div></div>)}</div></section>}
     </div></div>
-    {showResults&&<section className="panel full-sheet"><h3>Complete property schedule — all columns</h3><Table><TableHeader><TableRow>{keys.map(col=><TableHead key={col}>{label(sheet,col)}</TableHead>)}</TableRow></TableHeader><TableBody>{sheet.rows.map((r,i)=><TableRow key={r.row}>{keys.map(col=><TableCell key={col} className={r.cells[col].f?'sheet-result':'sheet-input'}>{display(sheet,col,rows[i][col])}</TableCell>)}</TableRow>)}</TableBody></Table></section>}
   </>;
 }

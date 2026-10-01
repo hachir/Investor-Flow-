@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import SavedProperties from './saved-properties';
 import WorkbookView from './workbook-view';
 import MoneyInput from './money-input';
+import AdminNavLink from './admin-access';
+import SiteFooter from './site-footer';
 import { Calculator, CalendarDays, RotateCcw, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -78,7 +80,7 @@ export default function Home() {
 
   if(showWorkbook) return <WorkbookView onNewEstimate={()=>setShowWorkbook(false)}/>;
   return <main><div className="workspace"><Button variant="outline" onClick={()=>setShowWorkbook(true)}>Back to complete workbook</Button><p className="source-note">New estimate uses today, +90 days to rent and +105 days to refinance. Imported workbook rows retain their original dates.</p></div>
-    <header className="topbar"><div className="brand-mark"><TrendingUp aria-hidden="true" /></div><div><h1>Mohammed Alhareb</h1></div><div className="as-of"><CalendarDays aria-hidden="true" /> As of {dateText(new Date())}</div><div id="account-nav" className="account-nav" /></header>
+    <header className="topbar"><div className="brand-mark"><TrendingUp aria-hidden="true" /></div><div><h1>Mohammed Alhareb</h1></div><div className="as-of"><CalendarDays aria-hidden="true" /> As of {dateText(new Date())}</div><nav className="site-nav" aria-label="Main navigation"><AdminNavLink /></nav><div id="account-nav" className="account-nav" /></header>
     <section className="workspace">
       <SavedProperties kind="new-estimate" title={deal.address} payload={deal} onLoad={v=>setDeal(p=>({...p,...Object.fromEntries(Object.entries(v).filter(([k])=>k in initialDeal))}))}/>
       <div className="intro-row"><div><p className="section-kicker">LIVE DEAL SUMMARY</p><h2>{deal.address || "New property"}</h2></div><div className="legend" aria-label="Color key"><span><i className="green-dot" /> Green: your inputs</span><span><i className="yellow-dot" /> Yellow: key results</span><span><i className="blue-dot" /> Blue: deal details</span></div></div>
@@ -95,6 +97,6 @@ export default function Home() {
         <section className="panel results-panel"><div className="panel-heading"><div><p className="section-kicker">CALCULATED</p><h3>Deal details</h3></div><Calculator className="heading-icon" aria-hidden="true" /></div><Table><TableHeader><TableRow><TableHead>Metric</TableHead><TableHead className="text-right">Result</TableHead></TableRow></TableHeader><TableBody>{rows.map(([label, value]) => <TableRow key={label}><TableCell>{label}</TableCell><TableCell className="result-cell">{value}</TableCell></TableRow>)}</TableBody></Table></section>
       </div>
     </section>
-    <footer>Estimates use a 30-year loan, 1.5% purchase closing cost, 1.5% refinance closing cost, 90 days to rent, and 105 days to refinance.</footer>
+    <SiteFooter />
   </main>;
 }
