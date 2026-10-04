@@ -4,7 +4,7 @@ An interactive BRRRR real estate investment calculator by **HAYDER ACHIR**.
 
 ## Live website
 
-[Open the calculator](https://brrrr-investment-calculator.hayderachir721.chatgpt.site)
+[Open the calculator](https://homeswithmohammed.com)
 
 ## Features
 
