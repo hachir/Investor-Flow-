@@ -14,7 +14,7 @@ export default function SiteFooter() {
         </section>
         <section>
           <h3>Contact</h3>
-          <a href="mailto:ha1991ha@yahoo.com">ha1991ha@yahoo.com</a>
+          <a href="mailto:hs22hs@yahoo.com">hs22hs@yahoo.com</a>
           <span>Phone available by email request</span>
           <span>Utah, United States</span>
         </section>
