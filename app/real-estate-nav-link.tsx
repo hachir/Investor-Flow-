@@ -1,5 +1,35 @@
+"use client";
+
+import { useEffect, useState } from 'react';
+
+type CatMotion = 'auto' | 'playing' | 'paused';
+const motionPreferenceKey = 'homesWithMohammed.catMotion';
+
 export default function RealEstateNavLink() {
-  return <a className="nav-link real-estate-nav-link" href="/real-estate">
+  const [motion, setMotion] = useState<CatMotion>('auto');
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const paused = motion === 'paused' || (motion === 'auto' && reducedMotion);
+
+  useEffect(() => {
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReducedMotion(preference.matches);
+    const updatePreference = (event: MediaQueryListEvent) => setReducedMotion(event.matches);
+    preference.addEventListener('change', updatePreference);
+    try {
+      const saved = window.localStorage.getItem(motionPreferenceKey);
+      if (saved === 'playing' || saved === 'paused') setMotion(saved);
+    } catch { /* The animation also works when browser storage is unavailable. */ }
+    return () => preference.removeEventListener('change', updatePreference);
+  }, []);
+
+  function toggleMotion() {
+    const next = paused ? 'playing' : 'paused';
+    setMotion(next);
+    try { window.localStorage.setItem(motionPreferenceKey, next); } catch { /* Keep the current-page preference. */ }
+  }
+
+  return <span className="real-estate-link-group" data-cat-motion={motion} data-cat-paused={paused}>
+    <a className="nav-link real-estate-nav-link" href="/real-estate">
     <span>Real estate</span>
     <span className="estate-cat-orbit" aria-hidden="true">
       <span className="estate-cat-runner">
@@ -18,5 +48,9 @@ export default function RealEstateNavLink() {
         </svg>
       </span>
     </span>
-  </a>;
+    </a>
+    <button type="button" className="estate-cat-toggle" onClick={toggleMotion} aria-label={paused ? 'Play cat animation' : 'Pause cat animation'} title={paused ? 'Play cat animation' : 'Pause cat animation'}>
+      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">{paused ? <path d="M5 3L13 8L5 13Z" /> : <><rect x="4" y="3" width="3" height="10" rx=".5" /><rect x="9" y="3" width="3" height="10" rx=".5" /></>}</svg>
+    </button>
+  </span>;
 }
