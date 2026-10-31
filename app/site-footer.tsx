@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function SiteFooter() {
   return (
-    <footer className="site-footer">
+    <footer id="contact" className="site-footer">
       <div className="footer-grid">
         <section>
           <p className="footer-kicker">REAL ESTATE INVESTMENT TOOLS</p>

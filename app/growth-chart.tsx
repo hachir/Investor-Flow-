@@ -24,13 +24,13 @@ export default function GrowthChart({arv,loan,rate,appreciation,invested}:{arv:n
     <div className="growth-legend"><span>— Property value</span><span>— Equity gain</span></div>
     <svg viewBox="0 0 550 375" role="img" aria-label="Projected property value and equity gain from refinance through year ten">
       <title>Property value and equity gain over ten years</title>
-      {Array.from({length:5},(_,i)=>lo+(hi-lo)*i/4).map(t=><g key={t}><line x1="85" x2="505" y1={y(t)} y2={y(t)} stroke="#34564a"/><text x="75" y={y(t)+5} textAnchor="end" fill="#bcd0c6" fontSize="14">{new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',notation:'compact',maximumFractionDigits:1}).format(t)}</text></g>)}
-      <path d={path('value')} fill="none" stroke="#f6c453" strokeWidth="3.5"/>
-      <path d={path('gain')} fill="none" stroke="#4cd4cf" strokeWidth="3.5"/>
-      <line x1={x(year)} x2={x(year)} y1="45" y2="320" stroke="#8aa99a" strokeDasharray="4 5"/>
-      {[0,2,4,6,8,10].map(n=><text key={n} x={x(n)} y="345" textAnchor="middle" fill="#bcd0c6" fontSize="14">{n}</text>)}
-      <text x="295" y="370" textAnchor="middle" fill="#bcd0c6" fontSize="14">Years after refinance</text>
-      {(['value','gain'] as const).map(key=><circle key={key} cx={x(year)} cy={y(selected[key])} r="6" fill={key==='value'?'#f6c453':'#4cd4cf'}/>)}
+      {Array.from({length:5},(_,i)=>lo+(hi-lo)*i/4).map(t=><g key={t}><line x1="85" x2="505" y1={y(t)} y2={y(t)} stroke="var(--border)"/><text x="75" y={y(t)+5} textAnchor="end" fill="var(--muted-foreground)" fontSize="14">{new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',notation:'compact',maximumFractionDigits:1}).format(t)}</text></g>)}
+      <path d={path('value')} fill="none" stroke="var(--chart-value)" strokeWidth="3.5"/>
+      <path d={path('gain')} fill="none" stroke="var(--chart-gain)" strokeWidth="3.5" strokeDasharray="8 4"/>
+      <line x1={x(year)} x2={x(year)} y1="45" y2="320" stroke="var(--muted-foreground)" strokeDasharray="4 5"/>
+      {[0,2,4,6,8,10].map(n=><text key={n} x={x(n)} y="345" textAnchor="middle" fill="var(--muted-foreground)" fontSize="14">{n}</text>)}
+      <text x="295" y="370" textAnchor="middle" fill="var(--muted-foreground)" fontSize="14">Years after refinance</text>
+      {(['value','gain'] as const).map(key=><circle key={key} cx={x(year)} cy={y(selected[key])} r="6" fill={key==='value'?'var(--chart-value)':'var(--chart-gain)'}/>)}
       {points.map(p=><rect key={p.year} x={x(p.year)-20} y="35" width="40" height="288" fill="transparent" onMouseEnter={()=>setYear(p.year)} onClick={()=>setYear(p.year)}/>)}
     </svg>
     <label className="growth-year">Year {year}<input type="range" min="0" max="10" step="1" value={year} aria-label="Projection year" onChange={e=>setYear(Number(e.target.value))}/></label>

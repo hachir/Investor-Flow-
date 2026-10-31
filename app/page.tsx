@@ -4,9 +4,10 @@ import { useEffect, useMemo, useState } from "react";
 import SavedProperties from './saved-properties';
 import WorkbookView from './workbook-view';
 import MoneyInput from './money-input';
-import AdminNavLink from './admin-access';
+import SiteHeader from './site-header';
+import InvestmentIntro from './investment-intro';
 import SiteFooter from './site-footer';
-import { Calculator, CalendarDays, RotateCcw, TrendingUp } from "lucide-react";
+import { Calculator, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -79,11 +80,10 @@ export default function Home() {
   const rows = [["Renting date (90 days after purchase)", dateText(result.rentalDate)], ["Refinance date (105 days after purchase)", dateText(result.refinanceDate)], ["Down payment", money2.format(result.downPayment)], ["Closing cost — purchase", money2.format(result.buyingClosing)], ["Loan amount buying", money2.format(result.buyingLoan)], ["Monthly payment buying PI", money2.format(result.buyingPayment)], ["Holding cost", money2.format(result.holdingCost)], ["Loan amount RF", money2.format(result.refinanceLoan)], ["Closing cost — refinance", money2.format(result.refinanceClosing)], ["Monthly refinance payment", money2.format(result.refinancePayment)], ["Total monthly payment", money2.format(result.totalMonthly)], ["Maintenance reserve", money2.format(result.maintenanceReserve)], ["Vacancy reserve", money2.format(result.vacancyReserve)], ["Total cost", money2.format(result.totalCost)], ["Money left in the deal", money2.format(result.moneyLeft)], ["Instant equity gain", money2.format(result.instantEquity)], ["Value in 10 years", money2.format(result.value10)], ["Loan balance in 10 years", money2.format(result.loanBalance10)], ["Equity gain in 10 years", money2.format(result.equityGain10)], ["Annual return of investments", `${result.annualReturn.toFixed(2)}%`]];
 
   if(showWorkbook) return <WorkbookView onNewEstimate={()=>setShowWorkbook(false)}/>;
-  return <main><div className="workspace"><Button variant="outline" onClick={()=>setShowWorkbook(true)}>Back to complete workbook</Button><p className="source-note">New estimate uses today, +90 days to rent and +105 days to refinance. Imported workbook rows retain their original dates.</p></div>
-    <header className="topbar"><div className="brand-mark"><TrendingUp aria-hidden="true" /></div><div><h1>Mohammed Alhareb</h1></div><div className="as-of"><CalendarDays aria-hidden="true" /> As of {dateText(new Date())}</div><nav className="site-nav" aria-label="Main navigation"><AdminNavLink /></nav><div id="account-nav" className="account-nav" /></header>
-    <section className="workspace">
+  return <main><SiteHeader onWorkbook={()=>setShowWorkbook(true)} /><InvestmentIntro estimate />
+    <section id="deal-workspace" className="workspace"><p className="source-note">New estimate uses today, +90 days to rent and +105 days to refinance. Imported workbook rows retain their original dates.</p>
       <SavedProperties kind="new-estimate" title={deal.address} payload={deal} onLoad={v=>setDeal(p=>({...p,...Object.fromEntries(Object.entries(v).filter(([k])=>k in initialDeal))}))}/>
-      <div className="intro-row"><div><p className="section-kicker">LIVE DEAL SUMMARY</p><h2>{deal.address || "New property"}</h2></div><div className="legend" aria-label="Color key"><span><i className="green-dot" /> Green: your inputs</span><span><i className="yellow-dot" /> Yellow: key results</span><span><i className="blue-dot" /> Blue: deal details</span></div></div>
+      <div className="intro-row"><div><p className="section-kicker">LIVE DEAL SUMMARY</p><h2>{deal.address || "New property"}</h2></div><div className="legend" aria-label="Color key"><span><i className="input-dot" /> Your inputs</span><span><i className="result-dot" /> Key results</span><span><i className="detail-dot" /> Deal details</span></div></div>
       <section className="metric-grid" aria-label="Key results">
         <article className="metric featured"><span>Monthly cash flow</span><strong>{money2.format(result.cashFlow)}</strong><small>After mortgage, tax and insurance</small></article>
         <article className="metric"><span>Money left in deal</span><strong>{money2.format(result.moneyLeft)}</strong><small>After refinance</small></article>

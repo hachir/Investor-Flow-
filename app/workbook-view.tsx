@@ -4,7 +4,8 @@ import SavedProperties from './saved-properties';
 import MoneyInput from './money-input';
 import GrowthChart from './growth-chart';
 import InvestorMotion from './investor-motion';
-import AdminNavLink from './admin-access';
+import SiteHeader from './site-header';
+import InvestmentIntro from './investment-intro';
 import SiteFooter from './site-footer';
 import data from '@/lib/workbook-data.json';
 import { calculateRow } from '@/lib/sheet-engine.mjs';
@@ -26,8 +27,8 @@ const sheets=data as Sheet[];
 const currency=new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:2,maximumFractionDigits:2});
 export default function WorkbookView({onNewEstimate}:{onNewEstimate:()=>void}) {
   const visibleSheets=sheets.filter(s=>!s.notes);
-  return <main><header className="topbar"><div><h1>Mohammed Alhareb</h1></div><Button className="as-of" onClick={onNewEstimate}>New estimate · today</Button><nav className="site-nav" aria-label="Main navigation"><AdminNavLink /></nav><div id="account-nav" className="account-nav" /></header>
-    <section className="workspace workbook"><p className="source-note">Imported workbook · original property dates and cell formulas. Green: editable inputs. Yellow: calculated results. Sign in below to save your property inputs.</p>
+  return <main><SiteHeader onNewEstimate={onNewEstimate} /><InvestmentIntro />
+    <section id="deal-workspace" className="workspace workbook"><div className="workspace-heading"><div><p className="section-kicker">YOUR INVESTMENT WORKBOOK</p><h2>Find the potential in the numbers.</h2></div><p className="workspace-caption">Original property dates. Original formulas.<br />Your assumptions, clearly compared.</p></div><p className="source-note">Choose an investment structure and a source property to get started. Edit your inputs, explore the calculated results, and open Your Account above to save your scenario.</p>
     <Tabs defaultValue={visibleSheets[0].name}><TabsList className="sheet-tabs">{visibleSheets.map(s=><TabsTrigger key={s.name} value={s.name}>{workbookSheetLabel(s.name)}</TabsTrigger>)}</TabsList>
     {visibleSheets.map(s=><TabsContent key={s.name} value={s.name}><SheetView sheet={s}/></TabsContent>)}
     </Tabs></section><SiteFooter /></main>;
@@ -62,7 +63,7 @@ function SheetView({sheet}:{sheet:Sheet}) {
   return <>
     <SavedProperties key={`${sheet.name}-${row.row}`} kind={sheet.name} title={String(values.A)} payload={Object.fromEntries(keys.filter(c=>!row.cells[c].f).map(c=>[c,values[c]]))} onLoad={v=>setEdits(p=>({...p,[row.row]:Object.fromEntries(Object.entries(v).filter(([c])=>keys.includes(c)&&!row.cells[c].f))}))}/>
     {sf&&<p className="source-note">This source worksheet contains only the address, purchase price, ARV, rehab cost, market rent and two dates. All other cells have no values or formulas; they remain uncalculated here.</p>}
-    <p className="scenario-status">{changed?'Edited scenario · compared with original workbook':'Original workbook scenario'}<span>Save to your account below</span></p>
+    <p className="scenario-status">{changed?'Edited scenario · compared with original workbook':'Original workbook scenario'}<span>Save with Your Account above</span></p>
     <section className="metric-grid">{summary.map((col,i)=><article className={'metric'+(i===0?' featured':'')} key={col}><span>{label(sheet,col)}</span><strong>{display(sheet,col,values[col])}</strong><small>{changed&&typeof values[col]==='number'&&typeof original[col]==='number'?`Change: ${kind(sheet,col)==='percent'?((Number(values[col])-Number(original[col]))*100).toFixed(2)+' percentage points':currency.format(Number(values[col])-Number(original[col]))}`:row.cells[col]?.f?'Original workbook calculation':'Not provided in source'}</small></article>)}</section>
     <div className="content-grid"><section className="panel investor-inputs-panel"><div className="panel-heading"><h3>Investor inputs</h3><Button variant="outline" onClick={()=>setEdits(p=>({...p,[row.row]:{}}))}>Restore source row</Button></div><label className="source-property-picker" htmlFor={`property-${sheet.name}`}>Source property<select id={`property-${sheet.name}`} value={selected} onChange={e=>setSelected(Number(e.target.value))}>{sheet.rows.map((r,i)=><option key={r.row} value={i}>{String(rows[i].A)}</option>)}</select></label><p className="source-note">Original dates are preserved for exact comparison. Holding cost uses the actual days from purchase to refinance, not a fixed 105 days.</p><div className="fields">{keys.filter(col=>!row.cells[col].f && (!sf || row.cells[col].v!=='' )).map(col=>{
       const k=kind(sheet,col),v=values[col];
