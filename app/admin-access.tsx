@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import type { User } from '@supabase/supabase-js';
-import Link from 'next/link';
 import { supabase } from './supabase-client';
 
 type AdminState = 'loading' | 'admin' | 'signed-out' | 'denied';
@@ -46,5 +45,5 @@ export default function AdminNavLink({
 }) {
   const { state } = useAdminAccess();
   if (state !== 'admin') return null;
-  return <Link className={className} href="/admin/schedule">{label}</Link>;
+  return <a className={className} href="/admin/schedule">{label}</a>;
 }

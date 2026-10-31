@@ -296,6 +296,36 @@ footer { color: var(--muted-foreground); }
 .footer-grid .footer-link:hover { background: transparent; }
 .footer-bottom { display: flex; justify-content: space-between; gap: 20px; margin-top: 38px; padding-top: 20px; border-top: 1px solid #d4c5ac; color: #7b684e; font-size: 10px; line-height: 1.7; }
 
+/* A decorative cat follows the real-estate link without intercepting taps. */
+.real-estate-nav-link { position: relative; display: inline-flex; align-items: center; justify-content: center; min-height: 38px; padding: 10px 15px; margin: 0 4px; border: 1px solid #bfa37a; border-radius: 6px; color: #594027; background: #eee0c8; font-weight: 700; text-decoration: none; animation: estate-link-glow 4s ease-in-out infinite; }
+.real-estate-nav-link:hover, .real-estate-nav-link:focus-visible { color: #493422; background: #e4d0ad; text-decoration: none; border-color: #8b6944; }
+.estate-cat-orbit { position: absolute; inset: -6px; pointer-events: none; user-select: none; }
+.estate-cat-runner { position: absolute; left: 0; top: 0; width: 29px; height: 24px; transform: translate(-50%, -50%); animation: estate-cat-lap 10s linear infinite; filter: drop-shadow(0 2px 1px #493c3026); }
+.estate-nav-cat { display: block; width: 100%; height: 100%; overflow: visible; color: #5a402b; fill: currentColor; }
+.estate-cat-tail, .estate-cat-step-back path, .estate-cat-step-front path { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.estate-cat-tail { transform-origin: 10px 18px; animation: estate-cat-tail-flick 1.4s ease-in-out infinite alternate; }
+.estate-cat-step-back { transform-origin: 15px 20px; animation: estate-cat-step .32s ease-in-out infinite alternate; }
+.estate-cat-step-front { transform-origin: 25px 19px; animation: estate-cat-step .32s ease-in-out infinite alternate-reverse; }
+.estate-cat-bob { animation: estate-cat-bob .32s ease-in-out infinite alternate; }
+.estate-nav-cat .estate-cat-ear, .estate-nav-cat .estate-cat-nose { fill: #d8ac81; }
+.estate-nav-cat .estate-cat-eye { fill: #fff4dc; }
+.real-estate-nav-link:hover .estate-cat-runner, .real-estate-nav-link:focus-visible .estate-cat-runner, .real-estate-nav-link:hover .estate-nav-cat *, .real-estate-nav-link:focus-visible .estate-nav-cat * { animation-play-state: paused; }
+@keyframes estate-cat-lap {
+  0%, 2% { left: 0; top: 0; transform: translate(-50%, -50%) rotate(0deg); }
+  32% { left: 100%; top: 0; transform: translate(-50%, -50%) rotate(0deg); }
+  35% { left: 100%; top: 0; transform: translate(-50%, -50%) rotate(90deg); }
+  47% { left: 100%; top: 100%; transform: translate(-50%, -50%) rotate(90deg); }
+  50% { left: 100%; top: 100%; transform: translate(-50%, -50%) rotate(180deg); }
+  80% { left: 0; top: 100%; transform: translate(-50%, -50%) rotate(180deg); }
+  83% { left: 0; top: 100%; transform: translate(-50%, -50%) rotate(270deg); }
+  95% { left: 0; top: 0; transform: translate(-50%, -50%) rotate(270deg); }
+  98%, 100% { left: 0; top: 0; transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes estate-cat-step { from { transform: rotate(-10deg); } to { transform: rotate(10deg); } }
+@keyframes estate-cat-bob { from { transform: translateY(0); } to { transform: translateY(-.8px); } }
+@keyframes estate-cat-tail-flick { from { transform: rotate(-10deg); } to { transform: rotate(12deg); } }
+@keyframes estate-link-glow { 0%, 100% { box-shadow: 0 0 0 0 #ac855100; } 50% { box-shadow: 0 0 0 4px #ac855115; } }
+
 /* Narrow screens retain every calculator and account action. */
 @media (max-width: 1180px) {
   .topbar { gap: 18px; flex-wrap: wrap; padding: 20px 0; }

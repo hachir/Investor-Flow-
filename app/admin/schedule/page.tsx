@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from 'react';
 import { Database, Download, Home } from 'lucide-react';
-import Link from 'next/link';
 import data from '@/lib/workbook-data.json';
 import { calculateRow } from '@/lib/sheet-engine.mjs';
 import {
@@ -98,7 +97,7 @@ export default function AdminSchedulePage() {
         <header className="topbar">
           <div className="brand-mark"><Database aria-hidden="true" /></div>
           <div><p className="eyebrow">PRIVATE ADMIN AREA</p><h1>Property schedule</h1></div>
-          <Link className="admin-nav-link" href="/"><Home aria-hidden="true" /> Calculator</Link>
+          <a className="admin-nav-link" href="/"><Home aria-hidden="true" /> Calculator</a>
         </header>
         <section className="workspace admin-access-page">
           <div className="panel admin-access-card">
@@ -106,7 +105,7 @@ export default function AdminSchedulePage() {
             <h2>{state === 'loading' ? 'Checking your account…' : state === 'signed-out' ? 'Sign in required' : 'Access denied'}</h2>
             {state === 'signed-out' && <p>Sign in with an administrator account from the Your account button on the calculator page.</p>}
             {state === 'denied' && <p>{user?.email ?? 'This account'} does not have permission to view the complete schedule.</p>}
-            {state !== 'loading' && <Button asChild><Link href="/">Return to calculator</Link></Button>}
+            {state !== 'loading' && <Button asChild><a href="/">Return to calculator</a></Button>}
           </div>
         </section>
         <SiteFooter />
@@ -119,7 +118,7 @@ export default function AdminSchedulePage() {
       <header className="topbar">
         <div className="brand-mark"><Database aria-hidden="true" /></div>
         <div><p className="eyebrow">PRIVATE ADMIN AREA</p><h1>Complete property schedule</h1></div>
-        <Link className="admin-nav-link" href="/"><Home aria-hidden="true" /> Calculator</Link>
+        <a className="admin-nav-link" href="/"><Home aria-hidden="true" /> Calculator</a>
       </header>
       <section className="workspace workbook admin-workspace">
         <div className="admin-intro">

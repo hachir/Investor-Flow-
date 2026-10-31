@@ -1,7 +1,6 @@
 "use client";
 
 import AdminNavLink from './admin-access';
-import Link from 'next/link';
 
 export default function SiteFooter() {
   return (
@@ -20,9 +19,9 @@ export default function SiteFooter() {
         </section>
         <section>
           <h3>Quick links</h3>
-          <Link href="/real-estate">Homes with Mohammed</Link>
-          <Link href="/">Deal calculator</Link>
-          <Link href="/#account-nav">Your account</Link>
+          <a href="/real-estate">Homes with Mohammed</a>
+          <a href="/">Deal calculator</a>
+          <a href="/#account-nav">Your account</a>
           <AdminNavLink className="footer-link" />
           <a href="https://github.com/hachir/Investor-Flow-" target="_blank" rel="noreferrer">GitHub project</a>
         </section>
