@@ -301,8 +301,9 @@ footer { color: var(--muted-foreground); }
 .real-estate-nav-link { position: relative; display: inline-flex; align-items: center; justify-content: center; min-height: 38px; padding: 10px 15px; margin: 0 4px; border: 1px solid #bfa37a; border-radius: 6px; color: #594027; background: #eee0c8; font-weight: 700; text-decoration: none; animation: estate-link-glow 4s ease-in-out infinite; }
 .real-estate-nav-link:hover, .real-estate-nav-link:focus-visible { color: #493422; background: #e4d0ad; text-decoration: none; border-color: #8b6944; }
 .estate-emoji-orbit { position: absolute; inset: -6px; pointer-events: none; user-select: none; }
-.estate-emoji-runner { position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 34px; height: 34px; transform: translate(-50%, -50%); animation: estate-emoji-lap 5.5s linear infinite; }
-.estate-orbit-emoji { display: grid; place-items: center; width: 34px; height: 34px; border: 1.5px solid #9438e8; border-radius: 50%; color: #9438e8; background: #adfff2; box-shadow: 0 0 0 3px #9438e81f, 0 0 15px #9438e852; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; font-size: 24px; font-weight: 400; line-height: 1; animation: estate-emoji-bob .6s ease-in-out infinite alternate; }
+.estate-emoji-runner { position: absolute; left: 0; top: 0; display: grid; place-items: center; width: 30px; height: 30px; transform: translate(-50%, -50%); animation: estate-emoji-lap 5.5s linear infinite; }
+.estate-orbit-emoji { display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid #b6a184; border-radius: 50%; color: #786044; background: #faf5eb; box-shadow: 0 2px 5px #493c301a; font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; font-size: 22px; font-weight: 400; line-height: 1; animation: estate-emoji-bob .6s ease-in-out infinite alternate; }
+.estate-emoji-symbol { display: block; filter: grayscale(1) brightness(.7) sepia(.8) saturate(.8); }
 @keyframes estate-emoji-lap {
   0% { left: 0; top: 0; }
   35% { left: 100%; top: 0; }
