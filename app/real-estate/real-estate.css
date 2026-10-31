@@ -1,0 +1,321 @@
+.estate-page { --estate-ink: #3c3328; --estate-muted: #766651; --estate-gold: #b49a70; background: #faf7f0; color: var(--estate-ink); }
+.estate-page section[id] { scroll-margin-top: 28px; }
+.estate-page a, .estate-page button { -webkit-tap-highlight-color: transparent; }
+.estate-page button { font: inherit; }
+.estate-page svg { flex-shrink: 0; width: 18px; height: 18px; stroke-width: 1.5; }
+.estate-page h2 { margin: 14px 0 24px; font: 400 clamp(35px, 4.1vw, 59px)/1.1 Georgia, serif; letter-spacing: -.035em; }
+.estate-page h2 em { color: #8b7452; font-weight: 400; }
+.estate-page p { line-height: 1.85; }
+.estate-page .estate-kicker { margin: 0; color: #8b7452; font-size: 10px; letter-spacing: .19em; line-height: 1.8; font-weight: 700; }
+.estate-section { width: min(1150px, calc(100% - 72px)); margin: 0 auto; padding: 100px 0; }
+.estate-skip { position: fixed; left: 20px; top: -100px; z-index: 100; padding: 14px; color: #fff; background: #493c30; }
+.estate-skip:focus { top: 20px; }
+.estate-brand { display: inline-flex; align-items: center; gap: 12px; color: #493b28; text-decoration: none; }
+.estate-brand>svg { width: 37px; height: 46px; stroke-width: 1; }
+.estate-brand strong { display: block; font-size: 24px; font-weight: 600; letter-spacing: .055em; line-height: 1.1; }
+.estate-brand small { display: block; margin-top: 7px; font-size: 8px; letter-spacing: .2em; }
+.estate-brand.is-light { color: #fffaf1; }
+.estate-button { display: inline-flex; align-items: center; justify-content: center; gap: 18px; min-height: 48px; padding: 14px 22px; border: 1px solid transparent; border-radius: 1px; cursor: pointer; font-size: 10px !important; font-weight: 700 !important; line-height: 1.4; letter-spacing: .12em; text-decoration: none; text-align: center; }
+.estate-button svg { width: 17px; height: 17px; }
+.estate-button-dark { color: #fffaf2; background: #4d402e; border-color: #4d402e; }
+.estate-button-dark:hover { color: #fff; background: #6b5334; border-color: #6b5334; }
+.estate-button-light { color: #463722; background: #f8f2e5; border-color: #f8f2e5; }
+.estate-button-light:hover { background: #e6d6ba; border-color: #e6d6ba; }
+.estate-button-outline { color: #655033; border-color: #c6b394; background: transparent; }
+.estate-button-outline:hover { background: #e7dac5; }
+.estate-text-link { display: inline-flex; align-items: center; gap: 16px; padding: 8px 0; color: #6e5737; text-decoration: none; font-size: 12px !important; font-weight: 600 !important; }
+.estate-text-link:hover { text-decoration: underline; }
+.estate-button-row { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin-top: 28px; }
+
+/* Full photographic entry, with the same editorial sequence as the reference. */
+.estate-hero { position: relative; isolation: isolate; min-height: 700px; height: min(850px, 90vh); margin: 18px; color: #fffaf1; background: #4f594a; overflow: visible; }
+.estate-hero-image, .estate-hero-shade { position: absolute; inset: 0; width: 100%; height: 100%; }
+.estate-hero-image { object-fit: cover; object-position: 55% center; z-index: -2; }
+.estate-hero-shade { z-index: -1; background: linear-gradient(180deg, #17201799, #17201720 30%, #1820164a 65%, #152016b3); }
+.estate-header { display: flex; align-items: center; justify-content: space-between; gap: 22px; padding: 30px 40px; }
+.estate-navigation { display: flex; align-items: center; gap: clamp(12px, 1.65vw, 25px); }
+.estate-navigation>a { color: #fffaf1; text-decoration: none; font-size: 10px; font-weight: 700; letter-spacing: .1em; white-space: nowrap; text-transform: uppercase; }
+.estate-navigation>a:hover { color: #ead7b2; }
+.estate-navigation .estate-nav-calculator { display: flex; gap: 6px; align-items: center; padding: 10px 12px; border: 1px solid #fff8ed77; }
+.estate-nav-calculator svg { width: 13px; height: 13px; }
+.estate-menu-toggle { display: none; color: #fffaf1; align-items: center; gap: 8px; padding: 10px 0 10px 12px; background: transparent; border: 0; }
+.estate-menu-toggle span { font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
+.estate-hero-copy { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: calc(100% - 210px); padding: 40px 24px 70px; text-align: center; }
+.estate-hero-copy>p { margin: 0 0 26px; font-size: 10px; letter-spacing: .28em; font-weight: 600; }
+.estate-hero-copy h1 { margin: 0; color: #fffaf4; font: italic 400 clamp(55px, 7.3vw, 112px)/1.15 Georgia, serif; letter-spacing: -.035em; text-shadow: 0 2px 30px #1a1c1640; }
+.estate-hero-copy h1 em { font-weight: 400; }
+.estate-hero-copy>span { margin: 24px 0 30px; font-size: 13px; letter-spacing: .065em; }
+.estate-hero-bottom { position: absolute; bottom: 30px; left: 40px; right: 40px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.estate-hero-bottom>span { color: #f0e5d2; font-size: 8px; letter-spacing: .2em; }
+.estate-hero-bottom>a { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid #fffaf177; border-radius: 50%; color: #fffaf1; }
+.estate-paths { width: min(1300px, calc(100% - 72px)); margin: 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid #dfd3be; }
+.estate-paths>a { display: grid; gap: 12px; padding: 28px 35px; color: #463722; text-decoration: none; }
+.estate-paths>a:first-child { padding-left: 0; }
+.estate-paths>a+a { border-left: 1px solid #dfd3be; }
+.estate-paths small { font-size: 8px; letter-spacing: .14em; color: #8a7558; }
+.estate-paths strong { display: flex; justify-content: space-between; gap: 18px; align-items: center; font: 400 25px Georgia, serif; }
+.estate-paths>a:hover { background: #efe6d6; }
+
+.estate-about { display: grid; grid-template-columns: .9fr 1.1fr; align-items: center; gap: 85px; }
+.estate-about-visual { position: relative; min-width: 0; height: 550px; background: #e8ddcb; }
+.estate-about-visual img { width: 100%; height: 100%; object-fit: cover; object-position: 91% center; }
+.estate-signature { position: absolute; right: -20px; bottom: 28px; padding: 27px 35px; border: 1px solid #d4c3a5; background: #f4ecddf0; color: #645034; font: 400 23px/1.3 Georgia, serif; }
+.estate-signature em { font-size: 34px; }
+.estate-about-copy>p:not(.estate-kicker) { color: #766651; font-size: 13px; }
+.estate-about-copy .estate-about-emphasis { margin-top: 24px; color: #4c3d29 !important; font: italic 22px/1.6 Georgia, serif !important; }
+.estate-buy-sell { display: grid; grid-template-columns: 1fr 1fr; width: min(1300px, calc(100% - 36px)); margin: 0 auto; }
+.estate-service { padding: 65px clamp(30px, 5vw, 75px); background: #efe6d6; }
+.estate-service-sell { background: #e3d3b8; }
+.estate-service h2 { font-size: clamp(32px, 3.4vw, 46px); }
+.estate-service>p:not(.estate-kicker) { color: #756149; font-size: 13px; }
+.estate-service ol { list-style: none; margin: 30px 0 24px; padding: 0; }
+.estate-service li { display: flex; gap: 18px; padding: 16px 0; border-top: 1px solid #cdb99a66; }
+.estate-service li>span { color: #a68a60; font: italic 20px Georgia, serif; }
+.estate-service h3 { margin: 0 0 7px; color: #4d3d28; font-size: 12px; font-weight: 600; }
+.estate-service li p { margin: 0; font-size: 12px; color: #7a684f; }
+.estate-guide { border-top: 1px solid #c4af8b; border-bottom: 1px solid #c4af8b; margin: 15px 0 28px; }
+.estate-guide summary { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 16px 0; cursor: pointer; color: #604b2e; font-size: 11px; font-weight: 600; }
+.estate-guide summary::-webkit-details-marker, .estate-faq summary::-webkit-details-marker { display: none; }
+.estate-guide>div { padding: 0 0 10px; color: #725e44; font-size: 12px; }
+.estate-guide[open] svg, .estate-faq details[open] svg { transform: rotate(180deg); }
+
+.estate-home-search { display: grid; grid-template-columns: 1fr 1fr; width: min(1300px, calc(100% - 36px)); margin: 70px auto 0; background: #4c4436; color: #f2e8d4; }
+.estate-home-search-image { min-height: 430px; background-image: url('/images/utah-neighborhoods.webp'); background-size: 300% 200%; background-position: 50% 0; }
+.estate-home-search>div:last-child { padding: 50px 48px; }
+.estate-home-search .estate-kicker { color: #c8b28c; }
+.estate-home-search h2 { font-size: clamp(30px, 3.2vw, 44px); }
+.estate-home-search h2 em { color: #cfb78d; }
+.estate-home-search p { font-size: 12px; color: #ded0b9; }
+.estate-home-search .estate-text-link { color: #ead6b1; }
+.estate-home-search small { display: block; margin-top: 18px; color: #d3c2a6; font-size: 10px; }
+.estate-section-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 50px; margin-bottom: 30px; }
+.estate-section-heading h2 { margin-bottom: 0; }
+.estate-section-heading>p { max-width: 355px; margin: 0 0 4px; color: #7d6a4f; font-size: 13px; }
+.estate-area-filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 25px; }
+.estate-area-filters button { padding: 10px 18px; border: 1px solid #d2c2a8; border-radius: 1px; color: #7b6442; background: transparent; font-size: 11px; }
+.estate-area-filters button:hover { background: #e8dcc7; }
+.estate-area-filters button[aria-pressed="true"] { background: #4f402c; color: #fffaf2; border-color: #4f402c; }
+.estate-area-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.estate-area-card { position: relative; isolation: isolate; aspect-ratio: 1; padding: 0; border: 0; background: #8b8d73; overflow: hidden; text-align: left; }
+.estate-area-photo { position: absolute; inset: 0; z-index: -2; display: block; background-image: url('/images/utah-neighborhoods.webp'); background-size: 300% 200%; transition: transform .45s; }
+.estate-area-photo-0 { background-position: 0 0; }
+.estate-area-photo-1 { background-position: 50% 0; }
+.estate-area-photo-2 { background-position: 100% 0; }
+.estate-area-photo-3 { background-position: 0 100%; }
+.estate-area-photo-4 { background-position: 50% 100%; }
+.estate-area-photo-5 { background-position: 100% 100%; }
+.estate-area-card::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(transparent 35%, #202519d9); }
+.estate-area-label { position: absolute; bottom: 27px; left: 25px; right: 25px; color: #fff9e9; }
+.estate-area-label small { font-size: 8px; line-height: 1.6; letter-spacing: .16em; color: #e4d4b7; }
+.estate-area-label strong { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 10px; font: 400 clamp(23px, 2.3vw, 33px) Georgia, serif; }
+.estate-area-card:hover .estate-area-photo { transform: scale(1.035); }
+.estate-area-card.is-selected { box-shadow: 0 0 0 3px #ad8a54; }
+.estate-imagery-note { margin: 15px 0 0; font-size: 10px; color: #8d7a5f; }
+.estate-area-detail { display: grid; grid-template-columns: 1.6fr 1fr; gap: 45px; margin-top: 26px; padding: 35px; border: 1px solid #cbb697; background: #eee3cf; }
+.estate-area-detail h3 { margin: 10px 0 14px; font: 400 34px Georgia, serif; }
+.estate-area-detail p { font-size: 13px; color: #766044; }
+.estate-area-detail ul { list-style: none; padding: 0; margin: 18px 0 0; }
+.estate-area-detail li { display: flex; gap: 10px; align-items: center; padding: 7px 0; font-size: 12px; color: #766044; }
+.estate-area-detail li svg { color: #917747; width: 15px; }
+.estate-area-actions { position: relative; display: flex; flex-direction: column; gap: 12px; justify-content: center; padding-top: 35px; }
+.estate-close-area { position: absolute; top: 0; right: 0; display: grid; place-items: center; border: 0; background: transparent; color: #675030; padding: 6px; }
+
+.estate-market { background: #f0e7d7; border-top: 1px solid #e1d3ba; border-bottom: 1px solid #e1d3ba; }
+.estate-market-inner { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 75px; }
+.estate-market-inner>div>p:not(.estate-kicker) { font-size: 13px; color: #7b684c; }
+.estate-market-inner .estate-button { margin-top: 15px; }
+.estate-market-note { margin-top: 32px; padding-top: 22px; border-top: 1px solid #d8c7a9; }
+.estate-market-note span { color: #8e7149; font-size: 9px; letter-spacing: .15em; }
+.estate-market-note p { margin-bottom: 0; font-size: 12px; color: #7d6c51; }
+.estate-tools-card { min-width: 0; padding: 28px; background: #fffcf7; border: 1px solid #d6c5a6; }
+.estate-tool-tabs { display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 26px; border-bottom: 1px solid #d9c8aa; }
+.estate-tool-tabs button { padding: 14px 8px; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; color: #8b7655; background: transparent; font-size: 11px; }
+.estate-tool-tabs button[aria-selected="true"] { border-bottom-color: #695133; color: #4d3c25; font-weight: 700; }
+.estate-tool-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 14px; }
+.estate-number-field { display: block; min-width: 0; }
+.estate-number-field>span { display: block; margin-bottom: 7px; font-size: 11px; font-weight: 600; color: #7d6546; }
+.estate-number-field>div { display: flex; align-items: center; border: 1px solid #cdb99a; background: #f8f2e7; }
+.estate-number-field>div>span { padding-left: 10px; color: #9e8156; font-size: 12px; }
+.estate-number-field input, .estate-number-field select { width: 100%; min-width: 0; min-height: 43px; padding: 9px 10px; border: 0; border-radius: 0; color: #59452b; background: transparent; font-size: 14px; }
+.estate-number-field select { border: 1px solid #cdb99a; background: #f8f2e7; }
+.estate-number-field>div:focus-within { outline: 2px solid #9b7a4b; outline-offset: 2px; }
+.estate-number-field input:focus-visible { outline: none; }
+.estate-tool-result { margin-top: 25px; padding: 24px 18px; background: #e7dbc4; text-align: center; }
+.estate-tool-result>span { display: block; font-size: 10px; color: #846b49; }
+.estate-tool-result strong { display: block; margin: 10px 0; color: #58412a; font: 400 clamp(32px, 3.3vw, 45px) Georgia, serif; letter-spacing: -.025em; overflow-wrap: anywhere; }
+.estate-tool-result small { color: #8b7150; font-size: 11px; }
+.estate-fine-print { margin: 16px 0 0; color: #8b795e; font-size: 10px; }
+.estate-faq { display: grid; grid-template-columns: .85fr 1.15fr; gap: 85px; }
+.estate-faq-list details { border-bottom: 1px solid #d9cbb3; }
+.estate-faq-list details:first-child { border-top: 1px solid #d9cbb3; }
+.estate-faq summary { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 24px 0; cursor: pointer; font-size: 12px; font-weight: 600; line-height: 1.5; }
+.estate-faq details p { margin: 0 0 24px; font-size: 12px; color: #7b684c; }
+.estate-faq details a { color: #735329; }
+
+.estate-contact { background: #e5d5b9; }
+.estate-contact-inner { display: grid; grid-template-columns: .85fr 1.15fr; gap: 85px; padding-top: 80px; padding-bottom: 80px; }
+.estate-contact-inner>div>p:not(.estate-kicker) { max-width: 320px; color: #7d6646; font-size: 13px; }
+.estate-contact-email { display: flex; align-items: center; gap: 12px; margin-top: 30px; color: #644b2b; font-size: 14px; text-decoration: none; }
+.estate-contact-email:hover { text-decoration: underline; }
+.estate-contact-location { display: flex; align-items: center; gap: 12px; margin-top: 17px; color: #846c4a; font-size: 12px; }
+.estate-contact-monogram { margin-top: 34px; color: #af956b; font: italic 100px/1 Georgia, serif; }
+.estate-contact-form { min-width: 0; padding: 30px; border: 1px solid #c9b392; background: #f7efdf; }
+.estate-contact-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 15px; }
+.estate-contact-fields>label { display: grid; gap: 9px; color: #77603e; font-size: 11px; font-weight: 600; }
+.estate-contact-fields>label>span { font-weight: 400; }
+.estate-contact-fields input, .estate-contact-fields select, .estate-contact-fields textarea { min-width: 0; width: 100%; min-height: 43px; padding: 11px 12px; color: #59442b; border: 1px solid #ccb795; border-radius: 0; background: #fffbf3; font: 400 12px/1.5 Arial, sans-serif; }
+.estate-contact-fields textarea { resize: vertical; }
+.estate-contact-fields input::placeholder, .estate-contact-fields textarea::placeholder { color: #a18c6b; }
+.estate-full-field { grid-column: 1/-1; }
+.estate-contact-note { margin: 20px 0; color: #8e7756; font-size: 10px; }
+.estate-email-status { margin-top: 18px; padding: 14px; border: 1px solid #c6b38f; color: #6f5430; background: #e9dec9; font-size: 12px; line-height: 1.8; }
+.estate-email-status a { color: #624626; text-decoration: underline; }
+.estate-footer { padding: 55px max(36px, calc((100% - 1150px)/2)) 20px; background: #f6f0e4; color: #8b795c; }
+.estate-footer-inner { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 40px; }
+.estate-footer-inner>div { display: flex; flex-direction: column; align-items: flex-start; gap: 11px; }
+.estate-footer .estate-brand strong { font-size: 20px; }
+.estate-footer .estate-brand>svg { width: 28px; }
+.estate-footer .estate-brand small { font-size: 6px; }
+.estate-footer-inner p { margin: 10px 0 0; font-size: 11px; color: #8f7b5b; }
+.estate-footer h3 { margin: 0 0 8px; color: #6c5332; font-size: 11px; font-weight: 700; }
+.estate-footer-inner a:not(.estate-brand), .estate-footer-inner span { color: #8b7150; font-size: 11px; text-decoration: none; }
+.estate-footer-inner a:hover { text-decoration: underline; }
+.estate-footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 45px; padding-top: 20px; border-top: 1px solid #d9cbb1; color: #948368; font-size: 9px; line-height: 1.8; }
+.estate-footer-bottom a { color: #78603d; white-space: nowrap; text-decoration: none; }
+
+@media (max-width: 1120px) {
+  .estate-header { padding: 26px 28px; }
+  .estate-menu-toggle { display: flex; }
+  .estate-navigation { display: none; position: absolute; z-index: 30; top: 95px; left: 28px; right: 28px; padding: 25px; border: 1px solid #d5c3a1; background: #faf4e8; box-shadow: 0 20px 60px #241f1740; }
+  .estate-navigation.is-open { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+  .estate-navigation>a { padding: 17px 0; color: #6c5230; border-bottom: 1px solid #dfcfb3; font-size: 11px; }
+  .estate-navigation>a:hover { color: #3f2d18; }
+  .estate-navigation .estate-nav-calculator { margin-top: 12px; padding: 13px; border-color: #bfa47b; }
+  .estate-about, .estate-market-inner, .estate-contact-inner, .estate-faq { gap: 45px; }
+  .estate-about-visual { height: 490px; }
+  .estate-service { padding: 48px 35px; }
+  .estate-home-search>div:last-child { padding: 38px 30px; }
+}
+@media (max-width: 800px) {
+  .estate-section { width: calc(100% - 48px); padding: 65px 0; }
+  .estate-page h2 { font-size: 42px; }
+  .estate-hero { min-height: 660px; height: 85vh; margin: 12px; }
+  .estate-hero-copy { padding-bottom: 90px; }
+  .estate-hero-copy h1 { font-size: 75px; }
+  .estate-paths { width: calc(100% - 48px); }
+  .estate-paths>a { padding: 24px 20px; }
+  .estate-paths strong { font-size: 20px; }
+  .estate-paths small { font-size: 7px; letter-spacing: .06em; }
+  .estate-about { gap: 35px; }
+  .estate-about-visual { height: 480px; }
+  .estate-signature { right: -10px; padding: 22px; }
+  .estate-about-copy>p:not(.estate-kicker) { font-size: 12px; }
+  .estate-about-copy .estate-about-emphasis { font-size: 20px !important; }
+  .estate-buy-sell { width: calc(100% - 24px); }
+  .estate-service { padding: 42px 25px; }
+  .estate-service h2 { font-size: 34px; }
+  .estate-service>.estate-button { gap: 12px; font-size: 8px !important; padding: 14px; }
+  .estate-home-search { width: calc(100% - 24px); margin-top: 50px; }
+  .estate-home-search h2 { font-size: 34px; }
+  .estate-section-heading { gap: 25px; }
+  .estate-section-heading>p { max-width: 290px; font-size: 12px; }
+  .estate-area-grid { gap: 12px; }
+  .estate-area-label { bottom: 18px; left: 15px; right: 15px; }
+  .estate-area-label strong { font-size: 23px; }
+  .estate-area-label small { font-size: 6px; letter-spacing: .09em; }
+  .estate-area-detail { padding: 25px; gap: 30px; }
+  .estate-market-inner, .estate-faq, .estate-contact-inner { grid-template-columns: 1fr; gap: 30px; }
+  .estate-market-inner>div:first-child { max-width: 600px; }
+  .estate-tools-card { padding: 28px; }
+  .estate-contact-monogram { display: none; }
+  .estate-contact-inner>div>p:not(.estate-kicker) { max-width: 500px; }
+  .estate-footer { padding: 40px 24px 20px; }
+  .estate-footer-inner { grid-template-columns: 1fr 1fr; gap: 35px; }
+  .estate-footer-bottom { flex-wrap: wrap; gap: 12px; }
+}
+@media (max-width: 600px) {
+  .estate-section { width: calc(100% - 40px); padding: 55px 0; }
+  .estate-page .estate-kicker { font-size: 8px; }
+  .estate-page h2 { font-size: 39px; margin-bottom: 22px; }
+  .estate-hero { min-height: 640px; height: 88svh; max-height: 820px; margin: 9px; }
+  .estate-hero-image { object-position: 73% center; }
+  .estate-hero-shade { background: linear-gradient(#1520189c, #15201838 35%, #15201877 70%, #152018a6); }
+  .estate-header { padding: 22px 20px; }
+  .estate-brand { gap: 9px; }
+  .estate-brand strong { font-size: 20px; }
+  .estate-brand small { font-size: 6px; margin-top: 6px; }
+  .estate-brand>svg { width: 29px; height: 38px; }
+  .estate-menu-toggle { padding-left: 8px; }
+  .estate-menu-toggle span { font-size: 9px; }
+  .estate-menu-toggle svg { width: 20px; height: 20px; }
+  .estate-navigation { top: 83px; left: 16px; right: 16px; padding: 15px 20px; }
+  .estate-navigation>a { font-size: 10px; }
+  .estate-hero-copy { min-height: calc(100% - 160px); padding: 35px 18px 60px; }
+  .estate-hero-copy>p { font-size: 8px; letter-spacing: .22em; margin-bottom: 24px; }
+  .estate-hero-copy h1 { font-size: clamp(45px, 11.7vw, 68px); line-height: 1.2; }
+  .estate-hero-copy>span { font-size: 10px; letter-spacing: .02em; margin: 24px 0 30px; }
+  .estate-hero-bottom { left: 22px; right: 22px; bottom: 24px; }
+  .estate-hero-bottom>span { max-width: 240px; font-size: 7px; line-height: 1.8; }
+  .estate-hero-bottom>a { width: 32px; height: 32px; }
+  .estate-paths { width: calc(100% - 40px); grid-template-columns: 1fr; }
+  .estate-paths>a, .estate-paths>a:first-child { padding: 22px 0; }
+  .estate-paths>a+a { border: 0; border-top: 1px solid #dfd3be; }
+  .estate-paths strong { font-size: 25px; }
+  .estate-paths small { font-size: 8px; letter-spacing: .1em; }
+  .estate-about { grid-template-columns: 1fr; gap: 40px; }
+  .estate-about-visual { height: 380px; margin-right: 10px; }
+  .estate-signature { padding: 22px 27px; bottom: 24px; }
+  .estate-about-copy>p:not(.estate-kicker) { font-size: 13px; }
+  .estate-button { font-size: 9px !important; padding: 14px 18px; }
+  .estate-button-row { gap: 16px; }
+  .estate-buy-sell { grid-template-columns: 1fr; width: calc(100% - 18px); }
+  .estate-service { padding: 42px 26px; }
+  .estate-service h2 { font-size: 39px; }
+  .estate-service>.estate-button { font-size: 9px !important; }
+  .estate-home-search { grid-template-columns: 1fr; width: calc(100% - 18px); margin-top: 35px; }
+  .estate-home-search-image { min-height: 330px; }
+  .estate-home-search>div:last-child { padding: 38px 27px; }
+  .estate-home-search h2 { font-size: 35px; }
+  .estate-home-search .estate-button-row { gap: 20px; }
+  .estate-section-heading { display: block; }
+  .estate-section-heading>p { max-width: 100%; margin-top: 24px; }
+  .estate-area-filters { gap: 7px; }
+  .estate-area-filters button { padding: 9px 12px; font-size: 10px; }
+  .estate-area-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .estate-area-label { bottom: 15px; left: 12px; right: 12px; }
+  .estate-area-label strong { font-size: clamp(18px, 5.1vw, 27px); line-height: 1.1; gap: 8px; }
+  .estate-area-label strong svg { width: 13px; height: 13px; }
+  .estate-area-label small { display: none; }
+  .estate-imagery-note { font-size: 9px; }
+  .estate-area-detail { grid-template-columns: 1fr; padding: 24px 20px; gap: 18px; }
+  .estate-area-detail h3 { font-size: 30px; }
+  .estate-area-actions { padding-top: 28px; }
+  .estate-tools-card { padding: 22px 18px; }
+  .estate-number-field input, .estate-number-field select { font-size: 16px; }
+  .estate-tool-fields { gap: 17px 12px; }
+  .estate-number-field>span { font-size: 10px; }
+  .estate-tool-result strong { font-size: 40px; }
+  .estate-tool-result>span { line-height: 1.6; }
+  .estate-faq summary { font-size: 12px; }
+  .estate-contact-inner { gap: 35px; }
+  .estate-contact-email { font-size: 14px; margin-top: 24px; }
+  .estate-contact-form { padding: 24px 18px; }
+  .estate-contact-fields { grid-template-columns: 1fr; }
+  .estate-full-field { grid-column: auto; }
+  .estate-contact-fields input, .estate-contact-fields select, .estate-contact-fields textarea { font-size: 16px; }
+  .estate-contact-form>.estate-button { width: 100%; gap: 12px; }
+  .estate-footer-inner { gap: 30px 20px; }
+  .estate-footer-inner>div:first-child { grid-column: 1/-1; }
+  .estate-footer-inner>div:last-child { grid-column: 1/-1; }
+  .estate-footer-bottom { display: block; margin-top: 30px; }
+  .estate-footer-bottom>* { display: block; margin: 10px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .estate-page *, .estate-page *::before, .estate-page *::after { animation: none !important; transition: none !important; }
+}
+@media print {
+  .estate-hero, .estate-paths, .estate-navigation, .estate-contact-form, .estate-footer { display: none !important; }
+  .estate-section { width: 100%; padding: 24px 0; }
+  .estate-page { background: white; color: black; }
+  .estate-about, .estate-market-inner, .estate-faq, .estate-contact-inner { display: block; }
+}

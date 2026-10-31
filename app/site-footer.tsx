@@ -20,6 +20,7 @@ export default function SiteFooter() {
         </section>
         <section>
           <h3>Quick links</h3>
+          <Link href="/real-estate">Homes with Mohammed</Link>
           <Link href="/">Deal calculator</Link>
           <Link href="/#account-nav">Your account</Link>
           <AdminNavLink className="footer-link" />

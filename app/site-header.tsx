@@ -18,6 +18,7 @@ export default function SiteHeader({ onNewEstimate, onWorkbook }: {
       </Link>
       <nav className="site-nav" aria-label="Main navigation">
         <a className="nav-link" href="#deal-workspace">{onWorkbook ? 'Deal calculator' : 'Investment workbook'}</a>
+        <Link className="nav-link" href="/real-estate">Real estate</Link>
         <a className="nav-link" href="#contact">Contact</a>
         <AdminNavLink />
       </nav>
